@@ -1,6 +1,6 @@
 import os
 from flask import Flask, jsonify, g
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from .decorators import json, no_cache, rate_limit
 
 db = SQLAlchemy()
@@ -13,6 +13,7 @@ def create_app(config_name):
     # apply configuration
     cfg = os.path.join(os.getcwd(), 'config', config_name + '.py')
     app.config.from_pyfile(cfg)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # initialize extensions
     db.init_app(app)
